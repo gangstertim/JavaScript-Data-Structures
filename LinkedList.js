@@ -7,63 +7,63 @@ function LinkedList() {
 
 }
 
-LinkedList.prototype.returnAsArray = function() {
-	var toReturn = [];
-	var curr = this.head;
-	while (curr) {
-		toReturn.push(curr.data);
-		curr = curr.next;
-	}
-	return toReturn;
-}
+LinkedList.prototype = {
+	returnAsArray: function() {
+		var toReturn = [];
+		var curr = this.head;
+		while (curr) {
+			toReturn.push(curr.data);
+			curr = curr.next;
+		}
+		return toReturn;
+	},
+	apply: function(f) {
+		var curr = this.head;
+		while (curr) {
+			f(curr.data);
+			curr = curr.next;
+		}
+	},
+	reverse: function() {
+		var b = this.head;
+		var curr = b.next;
+		var f;
+		if (this.head.next) f = curr.next;
 
-LinkedList.prototype.apply = function(f) {
-	var curr = this.head;
-	while (curr) {
-		f(curr.data);
-		curr = curr.next;
-	}
-};
-
-LinkedList.prototype.reverse = function() {
-	var b = this.head;
-	var curr = b.next;
-	var f;
-	if (this.head.next) f = curr.next;
-
-	this.tail = this.head;
-	b.next = null;
-	while (f) {
+		this.tail = this.head;
+		b.next = null;
+		while (f) {
+			curr.next = b;
+			b = curr;
+			curr = f;
+			f = curr.next;
+		}
 		curr.next = b;
-		b = curr;
-		curr = f;
-		f = curr.next;
-	}
-	curr.next = b;
-	this.head = curr;
-};
-LinkedList.prototype.addNode = function(data) {
-	if (this.tail) {
-		this.tail.next = this.makeNode(data);
-		this.tail = this.tail.next;	
-	} else {
-		this.head = this.tail = this.makeNode(data);
-	}	
-};
-LinkedList.prototype.removeNode = function(data) {
-	var curr = this.head;
-	if (curr.data === data) {
-		head = head.next;
-	}
-	else while (curr.next) {
-		if (curr.next.data === data) {
-			curr.next = curr.next.next;
-			if (!curr.next) // curr.next does not exit
-				tail = curr.next;
-			break;
-		} else curr = curr.next;
-	}
-};
+		this.head = curr;
+	},
+	addNode: function(data) {
+		if (this.tail) {
+			this.tail.next = this.makeNode(data);
+			this.tail = this.tail.next;	
+		} else {
+			this.head = this.tail = this.makeNode(data);
+		}	
+	},
+	removeNode: function(data) {
+		var curr = this.head;
+		if (curr.data === data) {
+			head = head.next;
+		}
+		else while (curr.next) {
+			if (curr.next.data === data) {
+				curr.next = curr.next.next;
+				if (!curr.next) // curr.next does not exit
+					tail = curr.next;
+				break;
+			} else curr = curr.next;
+		}
+	};
+}
 
 
 
